@@ -1,0 +1,124 @@
+/* */
+
+/* Design tokens: centralized values for color, radius, and shadows */
+:root {
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-focus-ring: #258cfb;
+  --color-text-dark: #111;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f2f6fc;
+  --color-surface-hover: #f9fbff;
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 20px rgba(0,0,0,0.05);
+  --radius-md: 10px;
+  --radius-lg: 12px;
+}
+
+/* Base font sizing: slightly larger on tablet and up */
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* Accessible, consistent focus ring across interactive controls */
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem var(--color-focus-ring);
+}
+
+/* Page layout */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+/* Subtle radial background for visual depth */
+body {
+  margin-bottom: 60px;
+  background: radial-gradient(1000px 600px at 0% 0%, #f7faff 0%, #eef3fb 50%, #e8eef7 100%);
+}
+
+/* Softly glassy navbar */
+.navbar {
+  backdrop-filter: saturate(140%) blur(4px);
+}
+
+/* Cards: clean surface with gentle elevation */
+.card {
+  border: 0;
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-lg);
+}
+
+/* Dashboard stat cards: pastel backgrounds with dark text */
+.card.text-bg-success { background-color: #e6f4ea !important; color: var(--color-text-dark) !important; }
+.card.text-bg-danger  { background-color: #fdecea !important; color: var(--color-text-dark) !important; }
+.card.text-bg-primary { background-color: #e7f0fe !important; color: var(--color-text-dark) !important; }
+
+/* Tables: contained surface with header emphasis */
+.table {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.table th {
+  background: var(--color-surface-alt);
+  font-weight: 600;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background: var(--color-surface-hover);
+}
+
+/* Forms and buttons: consistent rounding */
+.form-control, .form-select, .btn {
+  border-radius: var(--radius-md);
+}
+
+/* Primary CTA: blue gradient, no border */
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+  border: none;
+}
+
+/* Secondary button with neutral gradient */
+.btn-secondary {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  border: none;
+}
+
+/* Shared hover treatment for gradient buttons */
+.btn-primary:hover, .btn-secondary:hover {
+  filter: brightness(0.95);
+}
+
+.btn-outline-danger {
+  border-radius: var(--radius-md);
+}
+
+/* Headings: subtle tightening for display text */
+h1, .display-4 {
+  letter-spacing: -0.02em;
+}
+
+/* Form labels: slightly stronger weight for readability */
+label.form-label { font-weight: 600; }
+
+/* Inputs: gentle hover affordance */
+.form-control:hover, .form-select:hover { border-color: #9ab7ff; }
+
+/* Chart container spacing */
+#categoryChart {
+  max-height: 340px;
+}

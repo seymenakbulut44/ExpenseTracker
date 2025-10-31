@@ -1,0 +1,30 @@
+@model IEnumerable<ExpenseTracker.Models.Category>
+@{
+	ViewData["Title"] = "Categories";
+}
+
+<h1 class="mb-3">Categories</h1>
+<a class="btn btn-primary mb-3" asp-action="Create">New Category</a>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th style="width: 160px;"></th>
+		</tr>
+	</thead>
+	<tbody>
+	@foreach (var c in Model)
+	{
+		<tr>
+			<td>@c.Name</td>
+			<td>
+				<a class="btn btn-sm btn-secondary" asp-action="Edit" asp-route-id="@c.Id">Edit</a>
+				<a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@c.Id">Delete</a>
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>
+
+

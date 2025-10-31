@@ -1,0 +1,88 @@
+﻿@* grafik etiket ve değerleri controller üzerinden gelir *@
+@{
+    ViewData["Title"] = "Dashboard";
+    var labels = (string[])ViewBag.ChartLabels ?? Array.Empty<string>();
+    var data = ((decimal[])ViewBag.ChartData ?? Array.Empty<decimal>()).Select(d => (double)d).ToArray();
+}
+
+<h1 class="mb-4">Dashboard</h1>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card text-bg-success">
+            <div class="card-body">
+                <div class="card-title fw-bold">Total Income</div>
+                <div class="fs-4">@(((decimal)(ViewBag.TotalIncome ?? 0m)).ToString("C"))</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-bg-danger">
+            <div class="card-body">
+                <div class="card-title fw-bold">Total Expense</div>
+                <div class="fs-4">@(((decimal)(ViewBag.TotalExpense ?? 0m)).ToString("C"))</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-bg-primary">
+            <div class="card-body">
+                <div class="card-title fw-bold">Balance</div>
+                <div class="fs-4">@(((decimal)(ViewBag.Balance ?? 0m)).ToString("C"))</div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+@if (!labels.Any())
+{
+    <div class="alert alert-info d-flex align-items-center justify-content-between">
+        <div>
+            No expenses yet. Create a category and add your first transaction.
+        </div>
+        <div>
+            <a class="btn btn-primary me-2" asp-controller="Categories" asp-action="Index">Manage Categories</a>
+            <a class="btn btn-secondary" asp-controller="Transactions" asp-action="Create">Add Transaction</a>
+        </div>
+    </div>
+}
+
+@* kategori bazlı harcama grafiği *@
+<div class="card">
+    <div class="card-header fw-bold">Expenses by Category</div>
+    <div class="card-body">
+        <canvas id="categoryChart" height="120"></canvas>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-outline-secondary" asp-controller="Transactions" asp-action="Index">View Transactions</a>
+        <a class="btn btn-outline-secondary" asp-controller="Categories" asp-action="Index">Manage Categories</a>
+    </div>
+    
+</div>
+
+@* chart.js istemci tarafı grafik kütüphanesi *@
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+    // basit donut grafik tanımı
+    const ctx = document.getElementById('categoryChart');
+    const labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(labels));
+    const data = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(data));
+    const colors = labels.map((_, i) => `hsl(${(i * 57) % 360} 70% 55%)`);
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: colors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
