@@ -190,7 +190,9 @@ Bu proje açık kaynaklıdır ve serbestçe kullanılabilir.
 
 ## 👤 Yazar
 
-Bu proje geliştirilmekte olan bir gider takip uygulamasıdır.
+**Seymen Akbulut**
+
+Bu proje, modern web teknolojileri kullanılarak geliştirilmiş bir gider takip uygulamasıdır.
 
 ---
 
